@@ -22,6 +22,7 @@ const Movies = ({movies, genres}) => {
 
     return (
         <ImageList cols={matchDownMd ? 1 : 5} rowHeight={365} gap={12}>
+        
              {
                 movies.results.map((movie) => (
                     <ImageListItemStyled key={movie.id}>
@@ -37,6 +38,8 @@ const Movies = ({movies, genres}) => {
                                subtitle={<span>{mapGenres(movie.genre_ids, genres)}</span>}
                             />
                          </Link>
+
+                       
                     </ImageListItemStyled>
                 ))
              }

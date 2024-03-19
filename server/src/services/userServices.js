@@ -1,12 +1,6 @@
 const User = require("../models/userModel");
 
-const getUserByEmail = async (email) => {
-  const user = await User.findOne({ email });
 
-  if (user) {
-    return user;
-  }
-};
 
 const getCurrentUser = async (id) => {
   const currentUser = await User.findOne({ _id: id }).select("-password");
@@ -16,4 +10,4 @@ const getCurrentUser = async (id) => {
   }
 };
 
-module.exports = { getUserByEmail, getCurrentUser };
+module.exports = {  getCurrentUser };

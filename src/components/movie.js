@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
+import { GoogleLogin } from "@react-oauth/google";
 import { IMAGES_PATH, COVER_PLACEHOLDER } from "../config";
 import { styled } from "@mui/system";
 import Movies from './Movies';
@@ -11,6 +12,11 @@ const GridStyled = styled(Grid)(({theme})=>({
 const ImgStyled = styled('img')({
     width: "100%"
 });
+
+
+const successResponse = (response) => {
+    console.log(response)
+}
 
 const Movie = ({movie, genres}) => {
     const formatRuntime = (runtime) => {
@@ -119,6 +125,8 @@ const Movie = ({movie, genres}) => {
                             <Typography variant="body1" gutterBottom={true}>
                                 { movie.overview }
                             </Typography>
+
+                            <div style={{width:"50%", marginTop:"50px"}}><GoogleLogin onSuccess={successResponse} /></div>
                          </>
                     )
                  }

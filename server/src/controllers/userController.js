@@ -36,21 +36,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
-  const userId = req.params.userId;
 
-  try {
-    const user = await getCurrentUser(userId);
-
-    if (!user) {
-      return res.status(404).json({ error: "user not found" });
-    }
-
-    return res.status(200).json({ message: "user found success", user });
-  } catch (error) {
-    return res.status(500).json({ error: "something went wrong" });
-  }
-};
 
 const getMe = async (req, res) => {
   const { id } = req.user;
