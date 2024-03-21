@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { useSelector } from "react-redux";
+import { useLoginUserWithGoogleMutation } from "../lib/authApi";
+import { useGetCurrentUserMutation } from "../lib/userApi";
 import { Grid, Typography } from "@mui/material";
 import { GoogleLogin } from "@react-oauth/google";
 import { IMAGES_PATH, COVER_PLACEHOLDER } from "../config";
 import { styled } from "@mui/system";
+import { Link } from "react-router-dom";
 import Movies from './Movies';
 
 const GridStyled = styled(Grid)(({theme})=>({
@@ -14,11 +18,29 @@ const ImgStyled = styled('img')({
 });
 
 
-const successResponse = (response) => {
-    console.log(response)
-}
+
 
 const Movie = ({movie, genres}) => {
+
+
+
+const [loginUserWithGoogle, {isSuccess, isError}] = useLoginUserWithGoogleMutation();
+const [getCurrentUser]= useGetCurrentUserMutation()
+
+const user = "Tosin";
+
+// const {user} = useSelector(state => state.userState)
+
+
+
+useEffect(() => {
+    getCurrentUser()
+}, [isSuccess, isError])
+
+const successResponse = async(response) => {
+  await  loginUserWithGoogle({authToken: response.credential})
+}
+
     const formatRuntime = (runtime) => {
         const hours = Math.floor(runtime / 60) + "h";
         const minutes = Math.floor(runtime % 60) + "m";
@@ -126,7 +148,7 @@ const Movie = ({movie, genres}) => {
                                 { movie.overview }
                             </Typography>
 
-                            <div style={{width:"50%", marginTop:"50px"}}><GoogleLogin onSuccess={successResponse} /></div>
+                            <div style={{width:"50%", marginTop:"50px"}}>{!user ? <GoogleLogin onSuccess={successResponse} /> : <Link to={`/movie/${movie.id}/stream`} className="btn btn-success">Stream Movie</Link>}</div>
                          </>
                     )
                  }

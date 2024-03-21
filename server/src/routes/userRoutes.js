@@ -2,9 +2,13 @@ const express = require("express");
 const {
   getMe,
 } = require("../controllers/userController");
-const requireSignin = require("../middlewares/Authtenticate");
+
+
+const Authenticate = require("../middlewares/Authtenticate")
+
+
 const router = express.Router();
-router.get("/me", requireSignin, getMe);
+router.get("/me", Authenticate, getMe);
 
 
 module.exports = router;

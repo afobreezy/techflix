@@ -10,7 +10,7 @@
   "author": "abideen braimoh",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.1.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -19,6 +19,7 @@
     "dotenv": "^16.4.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "google-auth-library": "^9.7.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "perfect-express-sanitizer": "^1.0.13",

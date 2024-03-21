@@ -1,23 +1,34 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const {OAuth2Client} = require("google-auth-library")
+const envVariables = require("../constants/index")
 
-const requireSignin = (req, res, next) => {
+const {GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET} = envVariables;
+
+const client = new OAuth2Client(GOOGLE_OAUTH_CLIENT_SECRET)
+
+
+const Authenticate = async(req, res, next) => {
+
+
+  console.log(req.cookies)
   const { authToken } = req.cookies;
 
   if (!authToken) {
     return res.status(401).json({ error: "You must be signed in" });
   }
 
-  jwt.verify(authToken, process.env.JWT_SECRET, (error, payload) => {
-    if (error) {
-      return res.status(403).send({ error: "Invalid token" });
-    } else {
-      // append user payload to request object to be accessible
-      // on our request controllers function
-      req.user = payload;
-      next();
-    }
-  });
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: authToken,
+      audience: GOOGLE_OAUTH_CLIENT_ID
+    })
+  
+    req.user = ticket.getPayload()
+
+    next()
+  }catch(error){
+    res.status(500).json({ error: error})
+  }
+
 };
 
-module.exports = requireSignin;
+module.exports = Authenticate;

@@ -17,6 +17,7 @@ const ImageListItemStyled = styled(ImageListItem)({
 }); 
 
 const Movies = ({movies, genres}) => {
+    // console.log(movies)
     const theme = useTheme();
     const matchDownMd = useMediaQuery(theme.breakpoints.down('sm'));
 
